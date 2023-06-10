@@ -3,15 +3,17 @@ import cors from "cors";
 import db from "./db";
 
 const api = express();
-const port = process.env.API_PORT;
+const port = process.env.API_PORT || 3001;
 
-
+api.use(cors({
+    methods: ["GET", "POST"],
+    origin: "*"
+}));
 
 api.get("/retrieve", async (req, res) => {
-    const items = await db("/retrieve", "shar-peis");
+    const items = await db("/retrieve", "sharpeis");
     
-    res.send(items);
-    res.sendStatus(200);
+    res.send({items});
 });
 
 api.listen(port, () => {
